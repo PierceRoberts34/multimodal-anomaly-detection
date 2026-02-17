@@ -1,2 +1,2 @@
-# sensor-data-cleaning
-To clean data from sensors
+# Sensor Data Cleaning
+Takes CSV sensor data input, outputs activity data.
