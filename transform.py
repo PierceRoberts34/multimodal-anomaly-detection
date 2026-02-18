@@ -122,7 +122,7 @@ activities['group'] = (activities['Activity'] != activities['Activity'].shift())
 activities = activities.groupby(['group', 'Activity']).agg(
     Start=('Start', 'first'),
     End=('End', 'last'),
-    Duration_(Seconds)=('Duration_(Seconds)', 'sum')
+    Duration=('Duration_(Seconds)', 'sum')
 ).reset_index().drop(columns='group')
 
 output_path = 'activities.csv'
