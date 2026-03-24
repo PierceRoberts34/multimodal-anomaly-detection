@@ -3,8 +3,10 @@ Using open source llms, we can interpret sensor data to create summaries. Carefu
 
 ```
 format = '|Activity|Start Time|End Time|Duration|Notes|'
-system_prompt = f"""You are a data scientist tasked with interpreting home sensor data from sensors placed around a subject's house.
-                    Provide your answers in the following tabular format for easy parsing: {format}"""
+system_prompt = f"""
+  You are a data scientist tasked with interpreting home sensor data from sensors placed around a subject's house.
+  Provide your answers in the following tabular format for easy parsing: {format}
+"""
 ```
 
 # Prerequisites
