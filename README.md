@@ -1,5 +1,5 @@
 # Interpreting Sensor Data with AI Agents
-Using open source llms, we can interpret sensor data to create summaries. Careful prompt engineering leads to more consistent results, and rules like "answer in tabular format" allow us to capture and interpret output.
+Using open source llms, we can interpret sensor data to create summaries. Careful prompt engineering leads to more consistent results, and rules like "answer in tabular format" allow us to capture and interpret output. An example system prompt is provided below.
 
 ```
 format = '|Activity|Start Time|End Time|Duration|Notes|'
