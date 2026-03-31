@@ -1,0 +1,14 @@
+[project]
+name = "multimodal-anomaly-detection"
+version = "0.1.0"
+description = "Combining llms and markov chains for more accurate event detection"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "dotenv>=0.9.9",
+    "duckdb>=1.5.1",
+    "numpy>=2.4.4",
+    "ollama>=0.6.1",
+    "pandas>=3.0.2",
+    "pydantic>=2.12.5",
+]
