@@ -5,7 +5,7 @@ In contrast to text-only large language models, multimodal large language models
 
 By combining a relatively simple unsupervised learning algorithm with a multimodal large language model, we can create an anomaly detection system which helps reduce the odds of a false positive. The more rapid first detection pass reduces computational overhead or token usage, depending on how the llm is deployed.
 
-Markov was selected as our simple unsupervised algorithm as it is better suited to anomaly detection in timeseries data compared to isolation forest, since isolation forest ignores temporal correlation.
+We use a hybrid approach to anomaly detection that combines isolation forest and markov anomaly detection algorithms. Isolation forests are good at spotting single-point deviations from the norm (e.g. the subject is in the kitchen in the middle of the night) while markov models are best for spotting unusual sequences (e.g. the subject goes directly to bed without eating). 
 
 ## Getting Started
 Download and install Ollama. Fill out the `.env` file. We selected a low-parameter version of Qwen3-VL (qwen3-vl:2b). Parameter count and model choice will depend on deployment.
