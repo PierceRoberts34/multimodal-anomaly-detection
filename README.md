@@ -3,8 +3,15 @@ In contrast to text-only large language models, multimodal large language models
 
 We use a hybrid approach that combines isolation forest and markov anomaly detection algorithms. Isolation forests are good at spotting single-point deviations from the norm (e.g. the subject is in the kitchen in the middle of the night) while markov models are best for spotting unusual sequences (e.g. the subject goes directly to bed without eating). By creating numerical representations of the data, we can then convert our data into images which can be interpreted by the llm. Our approach is to create graphics of 24 hour periods, then check the most recent graph against the prior data. This approach is lightweight and processes large quantities of data rapidly, whereas an approach where the llm interacted with the data in tabular form would be much more intensive and prone to instability.
 
+## Installing Requirements
+### UV (Preferred)
+Run `uv sync` to create a virtual environment with the required packages in the working directory.
+
+### Pip
+Create a virtual environment in the code directory and run `pip install .`
+
 ## Getting Started
-Download and install Ollama. Fill out the `.env` file. We selected a low-parameter version of Qwen3-VL (qwen3-vl:2b). Parameter count and model choice will depend on deployment.
+Download and install Ollama, and use the CLI to download the desired llm model. We selected a low-parameter version of Qwen3-VL (qwen3-vl:2b). Fill out the `.env` file. Parameter count and model choice will depend on deployment.
 
 ```
 # Example .env configuration
