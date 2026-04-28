@@ -13,5 +13,8 @@ class EnvVars:
     ANOMALY_DATA_PATH = os.getenv('ANOMALY_DATA_PATH')
     LLM_MODEL = os.getenv('LLM_MODEL') # Lightweight models are suggested
     GRAPH_OUTPUT_FOLDER = os.getenv('GRAPH_OUTPUT_FOLDER')
-    MARKOV_PATH = os.path.join(GRAPH_OUTPUT_FOLDER+'markov_analysis.png')
+
+    @staticmethod
+    def getGraphPath(filename):
+        return os.path.join(EnvVars.GRAPH_OUTPUT_FOLDER+f'{filename}.png')
 

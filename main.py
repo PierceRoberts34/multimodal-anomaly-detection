@@ -103,9 +103,9 @@ def getScores():
     print(f"DataFrame written to Parquet in {end_time - start_time:.2f} seconds")
     return None
 
-def markovSignal():
+def probabilitySignal(signal):
     db = duckdb.connect()
-    df = db.execute(f" SELECT timestamp, markov_prob, FROM read_parquet('{parquet_data }') ORDER BY timestamp ASC").df()
+    df = db.execute(f"SELECT timestamp, {signal}, FROM read_parquet('{parquet_data }') ORDER BY timestamp ASC").df()
     db.close()
 
     df['timestamp'] = pd.to_datetime(df['timestamp'])
@@ -138,28 +138,28 @@ def markovSignal():
         line_width = 2.0 if is_recent else 1.0
         title = f"MOST RECENT 24H ({group.index[0].strftime('%Y-%m-%d')})" if is_recent else f"Historical Baseline ({group.index[0].strftime('%Y-%m-%d')})"
         
-        ax.plot(group.index, group['markov_prob'], color=line_color, linewidth=line_width, alpha=0.9)
+        ax.plot(group.index, group[f'{signal}'], color=line_color, linewidth=line_width, alpha=0.9)
         
         ax.set_title(title, fontweight='bold' if is_recent else 'normal')
-        ax.set_ylabel("Markov Prob")
+        ax.set_ylabel(f"{signal}")
         ax.grid(True, linestyle='--', alpha=0.4)
         
         # Clean up X-axis to only show hours/minutes so it doesn't clutter
         ax.xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%H:%M'))
 
     plt.tight_layout()
-    plt.savefig(EnvVars.MARKOV_PATH, dpi=150)
+    outputPath = EnvVars.getGraphPath(signal)
+    plt.savefig(outputPath, dpi=150)
     plt.close()
 
-    return None
-
+    return outputPath
 
 def main():
     # Prepare the data
     prepareData()
 
     getScores()
-    markovSignal()
+    markovPath = probabilitySignal('markov_prob')
 
     # Prompt the Local Multimodal LLM
     print("Feeding combined image to local llm...")
@@ -177,7 +177,7 @@ def main():
         response = generate(
             model=EnvVars.LLM_MODEL,
             prompt=prompt_text,
-            images=[EnvVars.MARKOV_PATH] 
+            images=[markovPath] 
         )
         
         print("\n=== LLM Analysis ===")
