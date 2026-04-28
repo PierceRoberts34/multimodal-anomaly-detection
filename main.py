@@ -103,14 +103,9 @@ def getScores():
     print(f"DataFrame written to Parquet in {end_time - start_time:.2f} seconds")
     return None
 
-def main():
-    # Prepare the data
-    prepareData()
-
-    getScores()
-
+def markovSignal():
     db = duckdb.connect()
-    df = db.execute(f" SELECT timestamp, markov_prob, iforest_score FROM read_parquet('{parquet_data }') ORDER BY timestamp ASC").df()
+    df = db.execute(f" SELECT timestamp, markov_prob, FROM read_parquet('{parquet_data }') ORDER BY timestamp ASC").df()
     db.close()
 
     df['timestamp'] = pd.to_datetime(df['timestamp'])
@@ -153,11 +148,20 @@ def main():
         ax.xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%H:%M'))
 
     plt.tight_layout()
-    combined_image_path = "./data/markov_analysis.png"
-    plt.savefig(combined_image_path, dpi=150)
+    plt.savefig(EnvVars.MARKOV_PATH, dpi=150)
     plt.close()
 
-    # 4. Prompt the Local Multimodal LLM
+    return None
+
+
+def main():
+    # Prepare the data
+    prepareData()
+
+    getScores()
+    markovSignal()
+
+    # Prompt the Local Multimodal LLM
     print("Feeding combined image to local llm...")
     
     # The prompt explicitly references our layout and color-coding
@@ -173,7 +177,7 @@ def main():
         response = generate(
             model=EnvVars.LLM_MODEL,
             prompt=prompt_text,
-            images=[combined_image_path] 
+            images=[EnvVars.MARKOV_PATH] 
         )
         
         print("\n=== LLM Analysis ===")

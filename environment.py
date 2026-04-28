@@ -12,4 +12,6 @@ class EnvVars:
     PARQUET_SENSOR_DATA_PATH = os.path.splitext(CSV_SENSOR_DATA_PATH)[0]+'.parquet'
     ANOMALY_DATA_PATH = os.getenv('ANOMALY_DATA_PATH')
     LLM_MODEL = os.getenv('LLM_MODEL') # Lightweight models are suggested
+    GRAPH_OUTPUT_FOLDER = os.getenv('GRAPH_OUTPUT_FOLDER')
+    MARKOV_PATH = GRAPH_OUTPUT_FOLDER+'markov_analysis.png'
 
