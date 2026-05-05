@@ -9,7 +9,7 @@ class EnvVars:
     CSV_SENSOR_DATA_PATH = os.getenv('CSV_SENSOR_DATA_PATH')
     CLEANED_CSV_DATA_PATH = os.path.splitext(CSV_SENSOR_DATA_PATH)[0]+'_cleaned'+'.csv'
     CSV_APPLIANCE_DATA_PATH = os.path.splitext(CSV_SENSOR_DATA_PATH)[0]+'_appliance-usage_cleaned'+'.csv'
-    PARQUET_SENSOR_DATA_PATH = os.path.splitext(CSV_SENSOR_DATA_PATH)[0]+'.parquet'
+    PARQUET_ACTIVITY_DATA_PATH = os.path.splitext(CSV_SENSOR_DATA_PATH)[0]+'.parquet'
     ANOMALY_DATA_PATH = os.getenv('ANOMALY_DATA_PATH')
     LLM_MODEL = os.getenv('LLM_MODEL') # Lightweight models are suggested
     GRAPH_OUTPUT_FOLDER = os.getenv('GRAPH_OUTPUT_FOLDER')
