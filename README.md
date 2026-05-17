@@ -7,7 +7,7 @@ We use a hybrid approach that combines isolation forest and markov anomaly detec
 Markov is an unsupervised anomaly detection approach for finding unusual patterns in sequential data. Low-likelihood state transitions are marked anomalous.
 
 ### IForest
-Isolation Forest is an unsupervised anomaly detection algorithm. Our model uses cyclical encoding to represent time of day as a feature, paired with the information about the sensor itself.
+Isolation Forest is an unsupervised anomaly detection algorithm. Our model uses cyclical encoding to represent time of day as a feature, paired with the information about the sensor itself. Cyclical autoencoding allows a machine learning algorithm to interpret the same time on different days as similar, and avoids creating a "jump" such as that between 12:59 and 1:00 or between 2359 and 0000 in time encoded in a standard 24-hour format. 
 
 ## Installing Requirements
 ### UV (Preferred)
