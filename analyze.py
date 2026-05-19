@@ -1,5 +1,6 @@
 import pandas as pd
 from sklearn.ensemble import IsolationForest
+from treeple import ExtendedIsolationForest
 from sklearn.preprocessing import LabelEncoder
 
 
@@ -19,7 +20,6 @@ def markovProb(df):
 
 # Determine iforest probability
 def iforestProb(df):
-
     # Encode categorical strings to integers
     le_activity = LabelEncoder()
 
@@ -27,11 +27,13 @@ def iforestProb(df):
     df['sensorEnc'] = le_activity.fit_transform(df['sensor'])
 
     # Create feature array (X)
-    X = df[['sensorEnc', 'sinTransform', 'cosTransform']].values
+    X = df[['sensorEnc', 'sinTransform', 'cosTransform']].to_numpy()
 
     # window_size: how many points to keep in the ensemble
     # n_estimators: number of trees
-    model = IsolationForest(n_estimators=100)
+    model = ExtendedIsolationForest(n_estimators=200, 
+                                    feature_combinations=2,
+                                    random_state=42)
 
     # Higher scores indicate higher anomaly probability
     model.fit(X)
