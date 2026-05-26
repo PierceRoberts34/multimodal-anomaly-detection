@@ -9,7 +9,7 @@ from ollama import generate
 
 from environment import EnvVars
 from preprocessing import prepareData
-from analyze import markovProb, iforestProb
+from analyze import markovProb, iforestProb, eifProb
 
 metadata_file = EnvVars.SENSOR_METADATA_PATH
 appliance_use_data = EnvVars.APPLIANCE_DATA_PATH
@@ -29,11 +29,12 @@ def getScores():
     db.execute(query)
     df = db.execute(f"SELECT dt, sensor, sinTransform, cosTransform FROM ml_data").df()
     df['markov_prob'] = markovProb(df)
-    df['iforest_score'] =iforestProb(df)
+    df['iforest_score'] = iforestProb(df)
+    df['eif_score'] = eifProb(df)
     db.sql("CREATE TABLE scores AS SELECT * FROM df")
     query = f"""
         COPY (
-        SELECT ml_data.*, scores.markov_prob, scores.iforest_score
+        SELECT ml_data.*, scores.markov_prob, scores.iforest_score, scores.eif_score
         FROM ml_data
         LEFT JOIN scores
         ON ml_data.dt = scores.dt
@@ -136,6 +137,7 @@ def main():
     # Create graph of last 30 days
     markovPath = probabilitySignal('markov_prob', 0.01)
     iforestPath = probabilitySignal('iforest_score', -0.15)
+    eifPath = probabilitySignal('eif_score', -0.15)
 
     # Prompt multimodal llm with probability
     promptLLM(markovPath)

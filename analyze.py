@@ -18,8 +18,25 @@ def markovProb(df):
     )
     return markov_prob
 
-# Determine iforest probability
 def iforestProb(df):
+    le_activity = LabelEncoder()
+
+    # Create features for machine learning model
+    df['sensorEnc'] = le_activity.fit_transform(df['sensor'])
+
+    X = df[['sensorEnc', 'sinTransform', 'cosTransform']].values
+
+    model = IsolationForest(n_estimators=200)
+
+    # Higher scores indicate higher anomaly probability
+    model.fit(X)
+    
+    scores = model.decision_function(X)
+    
+    return scores
+
+# Determine extended iforest probability
+def eifProb(df):
     # Encode categorical strings to integers
     le_activity = LabelEncoder()
 
