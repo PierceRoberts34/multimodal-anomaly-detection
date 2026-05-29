@@ -17,12 +17,22 @@ Run `uv sync` to create a virtual environment with the required packages in the 
 Create a virtual environment in the code directory. From inside the virtual environment, run `pip install .`
 
 ## Getting Started
-Download and install Ollama, and use the CLI to download the desired llm model. We selected a low-parameter version of Qwen3-VL (qwen3-vl:2b). Fill out the `.env` file. Parameter count and model choice will depend on deployment.
-
+Folders are customizable and configured by environment variables, so the project structure is flexible. A sample directory structure is as follows:
+```
+./multimodal-anomaly-detection/
+├── data
+    ├── rawdata.csv
+├── metadata
+    ├── metadata.json
+├── reports
+    ├── csv
+    ├── graphs
+```
+To assign directories, create a `.env` file and configure the following environment variables.
 ```
 # Example .env configuration
 SENSOR_METADATA_PATH=./path/to/sensor/metadata.json
-CSV_SENSOR_DATA_PATH=./path/to/sensor/metadata.csv
+CSV_SENSOR_DATA_PATH=./path/to/sensor/rawdata.csv
 LLM_MODEL=qwen3-vl:2b
 ANOMALY_REPORT_FOLDER=./path/to/output.csv
 GRAPH_OUTPUT_FOLDER=./path/to/graph/folder/
