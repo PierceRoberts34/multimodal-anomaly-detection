@@ -28,7 +28,7 @@ Folders are customizable and configured by environment variables, so the project
     ├── csv
     ├── graphs
 ```
-To assign directories, create a `.env` file and configure the following environment variables.
+To assign directories, rename `.env.example` to `.env` and configure the following environment variables.
 ```
 # Example .env configuration
 SENSOR_METADATA_PATH=./path/to/sensor/metadata.json
