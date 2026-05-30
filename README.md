@@ -34,6 +34,6 @@ To assign directories, create a `.env` file and configure the following environm
 SENSOR_METADATA_PATH=./path/to/sensor/metadata.json
 CSV_SENSOR_DATA_PATH=./path/to/sensor/rawdata.csv
 LLM_MODEL=qwen3-vl:2b
-ANOMALY_REPORT_FOLDER=./path/to/output.csv
+ANOMALY_REPORT_FOLDER=./path/to/output/folder/
 GRAPH_OUTPUT_FOLDER=./path/to/graph/folder/
 ```
