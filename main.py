@@ -7,9 +7,9 @@ from matplotlib import pyplot as plt
 import pandas as pd
 from ollama import generate
 
-from environment import EnvVars
-from preprocessing import prepareData
-from analyze import markovProb, iforestProb, eifProb
+from utils.environment import EnvVars
+from utils.preprocessing import prepareData
+from utils.analyze import markovProb, iforestProb, eifProb
 
 metadata_file = EnvVars.SENSOR_METADATA_PATH
 appliance_use_data = EnvVars.APPLIANCE_DATA_PATH

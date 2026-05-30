@@ -2,7 +2,7 @@ import json
 
 import pandas as pd
 
-from environment import EnvVars
+from utils.environment import EnvVars
 
 # Clean the data for analysis
 def prepareData():
