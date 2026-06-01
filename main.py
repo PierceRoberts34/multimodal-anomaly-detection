@@ -1,3 +1,7 @@
+"""
+Main file, cleans csv and converts to parquet, then performs analysis
+"""
+
 import time
 
 import duckdb
