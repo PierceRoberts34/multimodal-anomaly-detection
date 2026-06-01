@@ -3,7 +3,7 @@ name = "multimodal-anomaly-detection"
 version = "0.1.0"
 description = "Combining llms and markov chains for more accurate event detection"
 readme = "README.md"
-requires-python = ">=3.11, <=3.14"
+requires-python = ">=3.11, <=3.13"
 dependencies = [
     "dotenv>=0.9.9",
     "duckdb>=1.5.1",
