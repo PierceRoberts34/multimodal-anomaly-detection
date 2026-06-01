@@ -1,3 +1,7 @@
+"""
+Uses cleaned data to display anomalies
+"""
+
 from dash import Dash, html, dcc, Input, Output
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
