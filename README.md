@@ -13,9 +13,6 @@ Isolation Forest is an unsupervised anomaly detection algorithm. Our model uses 
 ### UV (Preferred)
 Run `uv sync` to create a virtual environment with the required packages in the working directory.
 
-### Pip
-Create a virtual environment in the code directory. From inside the virtual environment, run `pip install .`
-
 ## Getting Started
 Folders are customizable and configured by environment variables, so the project structure is flexible. A sample directory structure is as follows:
 ```
