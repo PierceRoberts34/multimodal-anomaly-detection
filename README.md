@@ -11,7 +11,10 @@ Isolation Forest is an unsupervised anomaly detection algorithm. Our model uses 
 
 ## Installing Requirements
 ### UV (Preferred)
-Run `uv sync` to create a virtual environment with the required packages in the working directory.
+Run `uv sync` to create a virtual environment with the required packages in the working directory. This is the easiest way to install all requirements and the appropriate Python version.
+
+### Pip
+Create a virtual environment (requires Python >=3.11, <=3.13), then run `pip install -r requirements.txt`. Requirements are exported from pyproject.toml using `uv pip compile pyproject.toml > requirements.txt`
 
 ## Getting Started
 Folders are customizable and configured by environment variables, so the project structure is flexible. A sample directory structure is as follows:
