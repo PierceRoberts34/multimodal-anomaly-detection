@@ -37,3 +37,20 @@ LLM_MODEL=qwen3-vl:2b
 ANOMALY_REPORT_FOLDER=./path/to/output/folder/
 GRAPH_OUTPUT_FOLDER=./path/to/graph/folder/
 ```
+
+`metadata.json` is a file designed to distinguish sensor types and is used for the purpose of filtering data and manually reversing delays in sensor triggering. Current behavior is to filter out appliance usage data, so any sensor included in the "appliances" array is not included in the analysis. 
+
+```
+{
+    "vibration": {
+        "A_LIVINGROOM_VIBRATION_SENSOR": {
+            "Location": "Livingroom",
+            "Delay": 60
+        }
+    }
+    "appliances": ["Microwave", "Toaster", "TV"]
+}
+```
+
+## Running the Program
+`main.py` is designed to perform analysis of anomaly graphs using an llm. `dashboard.py` does not perform any llm analysis and instead shows an interactive dashboard of anomalies using the dash/plotly package.

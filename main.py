@@ -1,5 +1,5 @@
 """
-Main file, cleans csv and converts to parquet, then performs analysis
+Main file, cleans csv and converts to parquet, generates image and csv output of anomalies, and performs analysis using an llm. Ollama must be started for analysis to be performed.
 """
 
 import time

@@ -1,5 +1,5 @@
 """
-Uses cleaned data to display anomalies
+Script to display anomalies using Flask. Run the file to start the dashboard, then view output in a web browser.
 """
 
 from dash import Dash, html, dcc, Input, Output
