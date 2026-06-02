@@ -8,12 +8,17 @@ from plotly.subplots import make_subplots
 
 import duckdb
 import pandas as pd
-from environment import EnvVars
+from utils.environment import EnvVars
+from utils.preprocessing import prepareData
+from utils.analyze import getScores
 
 cleaned_data = EnvVars.CLEANED_DATA_PATH
 
-signal = 'iforest_score'
-threshold = -0.15
+# Prepare the data
+prepareData()
+
+# Calculate Probabilities
+getScores()
 
 def probabilitySignal(signal, threshold):
     db = duckdb.connect()

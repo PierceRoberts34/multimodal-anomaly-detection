@@ -13,40 +13,13 @@ from ollama import generate
 
 from utils.environment import EnvVars
 from utils.preprocessing import prepareData
-from utils.analyze import markovProb, iforestProb, eifProb
+from utils.analyze import getScores
 
 metadata_file = EnvVars.SENSOR_METADATA_PATH
 appliance_use_data = EnvVars.APPLIANCE_DATA_PATH
 cleaned_data = EnvVars.CLEANED_DATA_PATH
 
-def getScores():
-    period = 24.0 * 60.0 * 60.0
-    db = duckdb.connect()
-    # Sin and Cos transform perioding data to use as ML features
-    query = f"""
-            CREATE VIEW ml_data AS 
-            SELECT *,
-                    SIN(epoch(CAST(dt AS TIMESTAMP)) / {period} * 2 * PI()) AS sinTransform,
-                    COS(epoch(CAST(dt AS TIMESTAMP)) / {period} * 2 * PI()) AS cosTransform
-            FROM read_parquet('{cleaned_data}');
-            """
-    db.execute(query)
-    df = db.execute(f"SELECT dt, sensor, sinTransform, cosTransform FROM ml_data").df()
-    df['markov_prob'] = markovProb(df)
-    df['iforest_score'] = iforestProb(df)
-    df['eif_score'] = eifProb(df)
-    db.sql("CREATE TABLE scores AS SELECT * FROM df")
-    query = f"""
-        COPY (
-        SELECT ml_data.*, scores.markov_prob, scores.iforest_score, scores.eif_score
-        FROM ml_data
-        LEFT JOIN scores
-        ON ml_data.dt = scores.dt
-        ) TO '{cleaned_data}' (FORMAT 'parquet');
-        """
-    db.execute(query)
-    db.close()
-    return None
+
 
 def probabilitySignal(signal, threshold):
     db = duckdb.connect()
@@ -146,6 +119,7 @@ def main():
     # Prompt multimodal llm with probability
     promptLLM(markovPath)
     promptLLM(iforestPath)
+    promptLLM(eifPath)
 
 
 if __name__ == "__main__":

@@ -1,8 +1,43 @@
-import pandas as pd
+"""
+Contains machine learning algorithms used in the project
+"""
+
+import duckdb
 from sklearn.ensemble import IsolationForest
 from treeple import ExtendedIsolationForest
 from sklearn.preprocessing import LabelEncoder
 
+from utils.environment import EnvVars
+
+cleaned_data = EnvVars.CLEANED_DATA_PATH
+def getScores():
+    period = 24.0 * 60.0 * 60.0
+    db = duckdb.connect()
+    # Sin and Cos transform perioding data to use as ML features
+    query = f"""
+            CREATE VIEW ml_data AS 
+            SELECT *,
+                    SIN(epoch(CAST(dt AS TIMESTAMP)) / {period} * 2 * PI()) AS sinTransform,
+                    COS(epoch(CAST(dt AS TIMESTAMP)) / {period} * 2 * PI()) AS cosTransform
+            FROM read_parquet('{cleaned_data}');
+            """
+    db.execute(query)
+    df = db.execute(f"SELECT dt, sensor, sinTransform, cosTransform FROM ml_data").df()
+    df['markov_prob'] = markovProb(df)
+    df['iforest_score'] = iforestProb(df)
+    df['eif_score'] = eifProb(df)
+    db.sql("CREATE TABLE scores AS SELECT * FROM df")
+    query = f"""
+        COPY (
+        SELECT ml_data.*, scores.markov_prob, scores.iforest_score, scores.eif_score
+        FROM ml_data
+        LEFT JOIN scores
+        ON ml_data.dt = scores.dt
+        ) TO '{cleaned_data}' (FORMAT 'parquet');
+        """
+    db.execute(query)
+    db.close()
+    return None
 
 # Assign probabilities to sensor readings using a markov model
 def markovProb(df):

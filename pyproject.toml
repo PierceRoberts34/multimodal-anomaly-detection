@@ -5,6 +5,7 @@ description = "Combining llms and markov chains for more accurate event detectio
 readme = "README.md"
 requires-python = ">=3.11, <=3.13"
 dependencies = [
+    "dash>=4.2.0",
     "dotenv>=0.9.9",
     "duckdb>=1.5.1",
     "matplotlib>=3.10.8",
